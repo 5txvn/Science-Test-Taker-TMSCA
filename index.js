@@ -12,8 +12,13 @@ if (hasCode == "y") {
     if (temp.length < 2 || !fs.existsSync(`./keys/${temp[0]}/${temp[1]}.json`)) {
         console.log("Invalid code, exiting program...");
         process.exit();
-    } else {
+    } else if (hasCode == "n") {
         key = JSON.parse(fs.readFileSync(`./keys/${temp[0]}/${temp[1]}.json`, "utf8"))
+    } else if (hasCode == "quit") {
+      process.exit();
+    } else {
+      console.log("Invalid code, exiting program...");
+      process.exit();
     }
 } else if (hasCode == "n") {
     const code = prompt("Please enter the JSON for the key: ")
