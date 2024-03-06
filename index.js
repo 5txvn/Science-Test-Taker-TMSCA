@@ -3,6 +3,7 @@ const prompt = require('prompt-sync')();
 const chalk = require('chalk');
 const fs = require('fs');
 let questionNumber = 1;
+let score = 0;
 let key;
 let hasCode = prompt("Do you have a test code (y/n): ");
 if (hasCode == "y") {
@@ -23,12 +24,16 @@ while(questionNumber<=20) {
     let currentTime = Date.now();
     let question = prompt(questionNumber + ": ");
     if (question == key[questionNumber]) {
-        console.log(chalk.green(`Correct! Response time was ${(Date.now() - currentTime) / 1000} seconds`))
-        questionNumber++
+      score += 6;
+        console.log(chalk.green(`Correct! Response time was ${(Date.now() - currentTime) / 1000} seconds. Current score is ${score}`))
+        questionNumber++;
     } else if (question == "quit") {
         break;
+    } else if (question == "" || question == "skip") {
+      console.log(chalk.yellow(`Skipped! Response time was ${(Date.now() - currentTime) / 1000} seconds, and the correct answer was ${key[questionNumber]}. Current score is ${score}`))
     } else {
-        console.log(chalk.red(`Incorrect, correct answer is ${chalk.bold(key[questionNumber])}, and response time was ${(Date.now() - currentTime) / 1000} seconds`))
-        questionNumber++
+      score -= 2;
+        console.log(chalk.red(`Incorrect, correct answer is ${chalk.bold(key[questionNumber])}, and response time was ${(Date.now() - currentTime) / 1000} seconds. Current score is ${score}`))
+        questionNumber++;
     }
 }
