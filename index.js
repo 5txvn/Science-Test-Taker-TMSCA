@@ -5,6 +5,7 @@ const fs = require('fs');
 let questionNumber = 1;
 let score = 0;
 let key;
+console.log(fs.existsSync(`./keys/23-24/5.json`))
 let hasCode = prompt("Do you have a test code (y/n): ");
 if (hasCode == "y") {
     const code = prompt("Please enter the code: ")
@@ -12,17 +13,17 @@ if (hasCode == "y") {
     if (temp.length < 2 || !fs.existsSync(`./keys/${temp[0]}/${temp[1]}.json`)) {
         console.log("Invalid code, exiting program...");
         process.exit();
-    } else if (hasCode == "n") {
-        key = JSON.parse(fs.readFileSync(`./keys/${temp[0]}/${temp[1]}.json`, "utf8"))
-    } else if (hasCode == "quit") {
-      process.exit();
     } else {
-      console.log("Invalid code, exiting program...");
-      process.exit();
+        key = JSON.parse(fs.readFileSync(`./keys/${temp[0]}/${temp[1]}.json`, "utf8"))
     }
 } else if (hasCode == "n") {
     const code = prompt("Please enter the JSON for the key: ")
     key = JSON.parse(code)
+} else if (hasCode == "quit") {
+  process.exit()
+} else {
+  console.log("Invalid option, exiting program...");
+  process.exit();
 }
 //gpt prompt for key generation - Convert the following into json with the keys as the question numbers (ie. "1" or "17) and the values as the corresponding answers in capital letters
 while(questionNumber<=20) {
